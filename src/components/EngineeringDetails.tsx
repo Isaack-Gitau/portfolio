@@ -1,9 +1,10 @@
+
 const engineeringDetails = [
   {
     number: '01',
     title: 'Application Architecture',
     description:
-      'TrackIt is split into a React and TypeScript frontend and a FastAPI backend. The backend keeps routing, business logic, data access, validation, and persistence responsibilities separated.',
+      'TrackIt separates its React and TypeScript frontend from a FastAPI backend. Routing, business logic, data access, validation, and persistence have distinct responsibilities.',
     details: [
       'React + TypeScript frontend',
       'FastAPI REST backend',
@@ -15,7 +16,7 @@ const engineeringDetails = [
     number: '02',
     title: 'Authentication & Roles',
     description:
-      'Access control is enforced by the backend, not just hidden in the interface. Authentication, verification, and role checks determine which operations a user can perform.',
+      'Access control is enforced by the backend rather than relying on hidden interface elements. Authentication, verification, and role checks govern protected operations.',
     details: [
       'JWT authentication',
       'Verified-user access',
@@ -27,7 +28,7 @@ const engineeringDetails = [
     number: '03',
     title: 'Data & Lifecycle',
     description:
-      'Relational data models represent the different states and relationships involved in reporting, reviewing, claiming, moderating, and matching items.',
+      'Relational models represent the states and relationships involved in reporting, reviewing, claiming, moderating, and matching lost and found items.',
     details: [
       'PostgreSQL database',
       'SQLAlchemy ORM',
@@ -39,7 +40,7 @@ const engineeringDetails = [
     number: '04',
     title: 'Moderation & Trust',
     description:
-      'Community-submitted content needs controlled workflows. TrackIt separates ordinary user actions from privileged moderation operations across items, claims, reports, and comments.',
+      'Community-submitted content requires controlled workflows. TrackIt separates ordinary user actions from privileged moderation across items, claims, reports, and comments.',
     details: [
       'Item moderation',
       'Claim moderation',
@@ -51,7 +52,7 @@ const engineeringDetails = [
     number: '05',
     title: 'Matching System',
     description:
-      'The matching system compares lost and found items using multiple signals to surface potentially related items. Matches are informational and do not replace the claim or recovery workflow.',
+      'The matching system evaluates multiple signals to surface potentially related lost and found items. A match is informational and does not replace the claim or recovery workflow.',
     details: [
       'Category similarity',
       'Title and description signals',
@@ -63,7 +64,7 @@ const engineeringDetails = [
     number: '06',
     title: 'Testing & Reliability',
     description:
-      'The backend is developed with automated tests covering API behavior, services, repositories, profiles, permissions, and matching functionality.',
+      'Automated backend tests help verify API behavior, service and repository logic, profiles, permissions, and matching functionality.',
     details: [
       'Pytest test suite',
       'API-level testing',
@@ -75,39 +76,34 @@ const engineeringDetails = [
 
 function EngineeringDetails() {
   return (
-    <div className="mt-14 grid border-l border-t border-[#f4f1eb]/15 md:grid-cols-2">
+    <div className="mt-16 grid gap-x-12 gap-y-14 md:grid-cols-2 lg:gap-x-16 lg:gap-y-20">
       {engineeringDetails.map((detail) => (
-        <article
-          key={detail.number}
-          className="border-b border-r border-[#f4f1eb]/15 bg-[#123b66] p-6 sm:p-8 lg:p-10"
-        >
-          <div className="flex items-start justify-between gap-6">
-            <span className="text-xs font-bold tracking-[0.18em] text-[#1683f7]">
+        <article key={detail.number} className="min-w-0">
+          <div>
+            <span className="text-xs font-bold tabular-nums tracking-[0.16em] text-[var(--color-accent)]">
               {detail.number}
-            </span>
-
-            <span className="text-[9px] font-bold uppercase tracking-[0.16em] text-white/45">
-              Engineering
             </span>
           </div>
 
-          <h3 className="mt-10 text-2xl font-bold tracking-[-0.04em] text-[#f4f1eb] sm:text-3xl">
+          <h3 className="mt-6 text-2xl font-bold leading-tight tracking-[-0.045em] text-[var(--color-text)] sm:text-3xl">
             {detail.title}
+            <span className="text-[var(--color-accent)]">.</span>
           </h3>
 
-          <p className="mt-4 max-w-xl text-sm leading-7 text-white/70">
+          <p className="mt-4 max-w-xl text-sm leading-7 text-[var(--color-text-secondary)] sm:leading-8">
             {detail.description}
           </p>
 
-          <ul className="mt-7 space-y-3 border-t border-white/10 pt-6">
-            {detail.details.map((item, index) => (
+          <ul className="mt-7 space-y-3">
+            {detail.details.map((item) => (
               <li
                 key={item}
-                className="flex items-start gap-3 text-xs font-semibold text-white/75"
+                className="flex items-start gap-3 text-sm leading-6 text-[var(--color-text-secondary)]"
               >
-                <span className="mt-0.5 min-w-5 text-[9px] font-bold tracking-[0.12em] text-[#1683f7]">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
+                <span
+                  aria-hidden="true"
+                  className="mt-[0.65rem] h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]"
+                />
 
                 <span>{item}</span>
               </li>

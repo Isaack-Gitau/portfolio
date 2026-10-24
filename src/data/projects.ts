@@ -1,4 +1,4 @@
-export type Project = {
+﻿export type Project = {
   number: string
   title: string
   category: string
@@ -21,11 +21,11 @@ export const projects: Project[] = [
     title: 'TrackIt',
     category: 'Lost & Found Platform',
     description:
-      'A full-stack lost-and-found platform designed to help people publish, discover, verify, and recover lost or found items through a structured digital workflow.',
+      'A full-stack lost-and-found platform that helps people publish, discover, verify, and recover lost or found items through a structured digital workflow.',
     problem:
       'Lost-and-found processes can become difficult to manage when item reports, claims, verification, moderation, and communication are handled without a central system.',
     solution:
-      'TrackIt brings item discovery, claims, reports, comments, notifications, moderation, profiles, and matching into one application with role-aware access and structured workflows.',
+      'TrackIt brings item discovery, claims, reports, comments, notifications, moderation, profiles, and item matching into one application with role-aware access and structured workflows.',
     architecture:
       'A React and TypeScript frontend communicates with a FastAPI backend through REST APIs. The backend uses service and repository layers around PostgreSQL, with SQLAlchemy models and Alembic migrations.',
     technologies: [
@@ -44,17 +44,17 @@ export const projects: Project[] = [
       'Role-based moderation',
       'Reports and comments',
       'Notifications and profiles',
-      'Lost ↔ found matching',
+      'Lost-to-found item matching',
     ],
-    role: 'Lead full-stack developer',
+    role: 'Full-stack developer',
     links: [
       {
         label: 'Frontend',
-        href: 'https://github.com/isaackgofficial-byte/trackit-frontend',
+        href: 'https://github.com/Isaack-Gitau/trackit-frontend',
       },
       {
         label: 'Backend',
-        href: 'https://github.com/isaackgofficial-byte/trackit-backend',
+        href: 'https://github.com/Isaack-Gitau/trackit-backend',
       },
     ],
   },

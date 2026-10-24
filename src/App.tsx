@@ -1,89 +1,118 @@
-import { useState } from 'react'
-import CapabilityGrid from './components/CapabilityGrid'
-import ContactPanel from './components/ContactPanel'
-import EngineeringDetails from './components/EngineeringDetails'
-import ExperienceTimeline from './components/ExperienceTimeline'
-import ProjectShowcase from './components/ProjectShowcase'
-import SectionHeading from './components/SectionHeading'
+﻿
+import { useEffect, useState } from "react";
+import { Download, Mail, Moon, Sun } from "lucide-react";
+import { siGithub } from "simple-icons";
+
+import BrandIcon from "./components/BrandIcon";
+import CapabilityGrid from "./components/CapabilityGrid";
+import ContactPanel from "./components/ContactPanel";
+import EngineeringDetails from "./components/EngineeringDetails";
+import ExperienceTimeline from "./components/ExperienceTimeline";
+import ProjectShowcase from "./components/ProjectShowcase";
+import SectionHeading from "./components/SectionHeading";
+
+const navigation = [
+  { label: "Work", href: "#work" },
+  { label: "Skills", href: "#capabilities" },
+  { label: "Engineering", href: "#engineering" },
+  { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
+];
 
 const buildProcess = [
   {
-    number: '01',
-    title: 'Discover',
+    number: "01",
+    title: "Discover",
     description:
-      'Understand the problem, users, constraints, and the outcome the product actually needs to achieve.',
+      "Understand the problem, the people using the product, and the outcome it needs to achieve.",
   },
   {
-    number: '02',
-    title: 'Structure',
+    number: "02",
+    title: "Structure",
     description:
-      'Break the problem into interfaces, data, application logic, and clear responsibilities between systems.',
+      "Organize interfaces, data, application logic, and the responsibilities between systems.",
   },
   {
-    number: '03',
-    title: 'Build',
+    number: "03",
+    title: "Build",
     description:
-      'Implement the product incrementally with maintainable components, APIs, validation, and useful feedback loops.',
+      "Develop maintainable components, APIs, validation, and useful feedback flows.",
   },
   {
-    number: '04',
-    title: 'Test',
+    number: "04",
+    title: "Test",
     description:
-      'Check expected behavior, edge cases, permissions, failures, and the points where real users could get stuck.',
+      "Check expected behavior, edge cases, permissions, and the ways real users might get stuck.",
   },
   {
-    number: '05',
-    title: 'Refine',
+    number: "05",
+    title: "Refine",
     description:
-      'Improve the experience, simplify complicated flows, fix weak points, and make the implementation more reliable.',
+      "Improve usability, simplify complicated flows, and make the implementation more reliable.",
   },
-]
+];
 
 const technicalFocus = [
   {
-    label: 'Frontend',
-    items: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'React Router'],
+    label: "Frontend",
+    items: ["React", "TypeScript", "Vite", "Tailwind CSS", "React Router"],
   },
   {
-    label: 'Backend',
-    items: ['Python', 'FastAPI', 'REST APIs', 'Pydantic', 'JWT'],
+    label: "Backend",
+    items: ["Python", "FastAPI", "REST APIs", "Pydantic", "JWT"],
   },
   {
-    label: 'Data',
-    items: ['PostgreSQL', 'SQLAlchemy', 'Alembic', 'MySQL', 'SQL'],
+    label: "Data",
+    items: ["PostgreSQL", "SQLAlchemy", "Alembic", "MySQL", "SQL"],
   },
   {
-    label: 'Tools',
-    items: ['Git', 'GitHub', 'Linux', 'Docker', 'VS Code'],
+    label: "Tools",
+    items: ["Git", "GitHub", "Linux", "Docker", "VS Code"],
   },
-]
-
-const navigation = [
-  { label: 'Work', href: '#work' },
-  { label: 'Capabilities', href: '#capabilities' },
-  { label: 'Engineering', href: '#engineering' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
-]
+];
 
 function App() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    try {
+      const savedTheme = localStorage.getItem("trackit-portfolio-theme");
+      return savedTheme === "dark" ? "dark" : "light";
+    } catch {
+      return "light";
+    }
+  });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+
+    try {
+      localStorage.setItem("trackit-portfolio-theme", theme);
+    } catch {
+      // The selected theme still works while this page is open.
+    }
+  }, [theme]);
 
   const closeMobileMenu = () => {
-    setMobileMenuOpen(false)
-  }
+    setMobileMenuOpen(false);
+  };
+
+  const toggleTheme = () => {
+    setTheme((current) => (current === "light" ? "dark" : "light"));
+  };
 
   return (
-    <div className="min-h-screen bg-[#f4f1eb] text-[#151515]">
-      <header className="sticky top-0 z-50 border-b border-[#151515]/10 bg-[#f4f1eb]/95 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-4 sm:px-8 lg:px-12">
+    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] transition-colors duration-200">
+      {/* Navigation */}
+      <header className="sticky top-0 z-50 bg-[var(--color-bg)]/95 backdrop-blur-md">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-8 lg:px-12">
           <a
             href="#top"
             onClick={closeMobileMenu}
-            className="text-sm font-black tracking-[-0.06em] transition-colors hover:text-[#1683f7] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1683f7] focus-visible:ring-offset-2"
-            aria-label="Back to top"
+            aria-label="Isaack Gitau — back to top"
+            className="rounded-sm text-xl font-black tracking-[-0.08em] transition-colors hover:text-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
           >
-            IG<span className="text-[#1683f7]">.</span>
+            IG<span className="text-[var(--color-accent)]">.</span>
           </a>
 
           <nav
@@ -94,63 +123,73 @@ function App() {
               <a
                 key={item.href}
                 href={item.href}
-                className="rounded-sm text-[10px] font-bold uppercase tracking-[0.16em] text-[#151515]/65 transition-colors hover:text-[#1683f7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1683f7] focus-visible:ring-offset-4"
+                className="rounded-sm text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
               >
                 {item.label}
               </a>
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-5">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
+              title={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-[var(--color-surface-raised)] hover:text-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+            >
+              {theme === "light" ? (
+                <Moon size={18} aria-hidden="true" />
+              ) : (
+                <Sun size={18} aria-hidden="true" />
+              )}
+            </button>
+
             <a
               href="https://github.com/Isaack-Gitau"
               target="_blank"
               rel="noreferrer"
-              className="hidden rounded-sm text-[10px] font-bold uppercase tracking-[0.16em] transition-colors hover:text-[#1683f7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1683f7] focus-visible:ring-offset-4 sm:inline"
+              className="hidden items-center gap-2 text-xs font-semibold transition-colors hover:text-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] sm:inline-flex"
             >
-              GitHub ↗
+              <BrandIcon icon={siGithub} size={16} />
+              GitHub
             </a>
 
             <a
-              href="/Isaack-Gitau-CV.docx"
+              href="/Isaack-Gitau-CV.pdf"
               download
-              className="hidden rounded-sm text-[10px] font-bold uppercase tracking-[0.16em] transition-colors hover:text-[#1683f7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1683f7] focus-visible:ring-offset-4 sm:inline"
+              className="hidden items-center gap-2 rounded-full bg-[var(--color-accent)] px-4 py-2.5 text-xs font-semibold text-[var(--color-accent-contrast)] transition-colors hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] sm:inline-flex"
             >
-              CV ↓
+              CV
+              <Download size={14} aria-hidden="true" />
             </a>
 
             <button
               type="button"
               aria-label={
-                mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'
+                mobileMenuOpen
+                  ? "Close navigation menu"
+                  : "Open navigation menu"
               }
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-navigation"
               onClick={() => setMobileMenuOpen((open) => !open)}
-              className="group inline-flex h-10 w-10 items-center justify-center border border-[#151515]/15 bg-[#f4f1eb] transition-colors hover:border-[#1683f7] hover:text-[#1683f7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1683f7] focus-visible:ring-offset-2 md:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-[var(--color-surface-raised)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] md:hidden"
             >
-              <span className="sr-only">
-                {mobileMenuOpen
-                  ? 'Close navigation menu'
-                  : 'Open navigation menu'}
-              </span>
-
-              <span className="relative flex h-4 w-5 flex-col justify-between">
+              <span className="flex h-4 w-5 flex-col justify-between">
                 <span
-                  className={`block h-px w-full bg-current transition-transform duration-200 ${
-                    mobileMenuOpen ? 'translate-y-[7px] rotate-45' : ''
+                  className={`h-px w-full bg-current transition-transform duration-200 ${
+                    mobileMenuOpen ? "translate-y-[7px] rotate-45" : ""
                   }`}
                 />
-
                 <span
-                  className={`block h-px w-full bg-current transition-opacity duration-200 ${
-                    mobileMenuOpen ? 'opacity-0' : ''
+                  className={`h-px w-full bg-current transition-opacity duration-200 ${
+                    mobileMenuOpen ? "opacity-0" : ""
                   }`}
                 />
-
                 <span
-                  className={`block h-px w-full bg-current transition-transform duration-200 ${
-                    mobileMenuOpen ? '-translate-y-[7px] -rotate-45' : ''
+                  className={`h-px w-full bg-current transition-transform duration-200 ${
+                    mobileMenuOpen ? "-translate-y-[7px] -rotate-45" : ""
                   }`}
                 />
               </span>
@@ -160,51 +199,46 @@ function App() {
 
         <div
           id="mobile-navigation"
-          className={`border-t border-[#151515]/10 md:hidden ${
-            mobileMenuOpen ? 'block' : 'hidden'
+          className={`bg-[var(--color-bg)] md:hidden ${
+            mobileMenuOpen ? "block" : "hidden"
           }`}
         >
           <nav
-            className="mx-auto max-w-[1440px] px-5 py-4 sm:px-8"
+            className="mx-auto flex max-w-[1440px] flex-col px-5 pb-5 sm:px-8"
             aria-label="Mobile navigation"
           >
-            <div className="divide-y divide-[#151515]/10 border-y border-[#151515]/10">
-              {navigation.map((item, index) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={closeMobileMenu}
-                  className="flex items-center justify-between py-5 text-xs font-bold uppercase tracking-[0.16em] transition-colors hover:text-[#1683f7] focus-visible:bg-[#e9e5dd] focus-visible:outline-none"
-                >
-                  <span className="flex items-center gap-4">
-                    <span className="text-[9px] font-bold text-[#1683f7]">
-                      0{index + 1}
-                    </span>
+            {navigation.map((item, index) => (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={closeMobileMenu}
+                className="flex items-center gap-4 py-4 text-sm font-semibold transition-colors hover:text-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+              >
+                <span className="text-[10px] text-[var(--color-accent)]">
+                  0{index + 1}
+                </span>
+                {item.label}
+              </a>
+            ))}
 
-                    {item.label}
-                  </span>
-
-                  <span aria-hidden="true">↗</span>
-                </a>
-              ))}
-            </div>
-
-            <div className="flex items-center justify-between pt-5">
+            <div className="mt-3 flex flex-wrap gap-5 pt-3">
               <a
                 href="https://github.com/Isaack-Gitau"
                 target="_blank"
                 rel="noreferrer"
-                className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#151515]/60 transition-colors hover:text-[#1683f7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1683f7] focus-visible:ring-offset-4"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"
               >
-                GitHub ↗
+                <BrandIcon icon={siGithub} size={16} />
+                GitHub
               </a>
 
               <a
-                href="/Isaack-Gitau-CV.docx"
+                href="/Isaack-Gitau-CV.pdf"
                 download
-                className="text-[10px] font-bold uppercase tracking-[0.16em] transition-colors hover:text-[#1683f7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1683f7] focus-visible:ring-offset-4"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"
               >
-                Download CV ↓
+                Download CV
+                <Download size={15} aria-hidden="true" />
               </a>
             </div>
           </nav>
@@ -212,411 +246,335 @@ function App() {
       </header>
 
       <main id="top">
-        <section className="mx-auto max-w-[1440px] px-5 pb-24 pt-12 sm:px-8 sm:pt-16 lg:px-12 lg:pb-32 lg:pt-20">
-          <div className="grid gap-12 lg:grid-cols-[0.16fr_minmax(0,1fr)] lg:gap-8">
-            <aside className="hidden lg:flex lg:flex-col lg:justify-between">
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#151515]/45">
-                  Portfolio
-                </p>
+        {/* Hero */}
+        <section className="mx-auto max-w-[1440px] px-5 pb-24 pt-12 sm:px-8 sm:pb-28 sm:pt-16 lg:px-12 lg:pb-36 lg:pt-24">
+          <div className="grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+            <div>
+              <p className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.15em] text-[var(--color-text-secondary)]">
+                <span className="h-2 w-2 rounded-full bg-[var(--color-accent)]" />
+                Information Technology · Kenya
+              </p>
 
-                <p className="mt-2 text-xs font-semibold">2026</p>
+              <h1 className="mt-8 text-6xl font-bold leading-[0.91] tracking-[-0.075em] sm:text-7xl lg:text-[clamp(5rem,8vw,8.5rem)]">
+                Isaack
+                <br />
+                Gitau<span className="text-[var(--color-accent)]">.</span>
+              </h1>
+
+              <h2 className="mt-8 max-w-2xl text-2xl font-semibold leading-snug tracking-[-0.04em] sm:text-3xl">
+                Learning, building, and turning ideas into useful software.
+              </h2>
+
+              <p className="mt-6 max-w-xl text-base leading-8 text-[var(--color-text-secondary)] sm:text-lg">
+                I am an IT student awaiting graduation, developing my skills in
+                full-stack web development and building practical applications
+                that connect user experiences, backend logic, and data.
+              </p>
+
+              <div className="mt-9 flex flex-wrap items-center gap-4">
+                <a
+                  href="#work"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#6B352A] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#4A231C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] dark:bg-[var(--color-accent)] dark:text-[var(--color-accent-contrast)]"
+                >
+                  Explore my work
+                </a>
+
+                <a
+                  href="https://github.com/Isaack-Gitau"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-12 items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold transition-colors hover:text-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+                >
+                  <BrandIcon icon={siGithub} size={17} />
+                  Visit GitHub
+                </a>
               </div>
 
-              <div className="mt-32">
-                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#151515]/45">
-                  Based in
-                </p>
-
-                <p className="mt-2 text-sm font-semibold">Kenya</p>
+              <div className="mt-12 flex flex-wrap gap-3">
+                {[
+                  "Frontend development",
+                  "Backend APIs",
+                  "Relational databases",
+                ].map((skill) => (
+                  <span
+                    key={skill}
+                    className="rounded-full border border-[var(--color-border)] bg-[var(--color-surface-raised)] px-4 py-2 text-xs font-medium text-[var(--color-text-secondary)]"
+                  >
+                    {skill}
+                  </span>
+                ))}
               </div>
+            </div>
 
-              <div className="mt-auto pt-32">
-                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#151515]/45">
-                  Available for
-                </p>
-
-                <p className="mt-2 max-w-[110px] text-xs font-semibold leading-5">
-                  Development and technical opportunities
-                </p>
+            {/* Personal portrait */}
+            <div className="relative mx-auto w-full max-w-[420px] lg:ml-auto">
+              <div
+                aria-hidden="true"
+                className="absolute -right-3 -top-3 h-full w-full rounded-[1.75rem] bg-[var(--color-accent)] sm:-right-4 sm:-top-4"
+              />
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] bg-[var(--color-surface-raised)]">
+                <img
+                  src="/isaackGitau.png"
+                  alt="Portrait of Isaack Gitau"
+                  className="h-full w-full object-cover object-center"
+                  loading="eager"
+                  fetchPriority="high"
+                />
               </div>
-            </aside>
+            </div>
+          </div>
+
+          <div className="mt-20 grid gap-8 sm:mt-24 sm:grid-cols-3 sm:gap-10">
+            <div>
+              <p className="text-xs text-[var(--color-text-secondary)]">
+                Featured project
+              </p>
+              <p className="mt-2 text-lg font-semibold tracking-[-0.03em]">
+                TRACKIT
+              </p>
+              <p className="mt-1 text-sm text-[var(--color-text-secondary)]">
+                Lost and Found System
+              </p>
+            </div>
 
             <div>
-              <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_360px] xl:items-end xl:gap-16">
-                <div>
-                  <div className="flex items-center gap-3">
-                    <span className="h-2 w-2 rounded-full bg-[#1683f7]" />
+              <p className="text-xs text-[var(--color-text-secondary)]">
+                Development focus
+              </p>
+              <p className="mt-2 text-lg font-semibold tracking-[-0.03em]">
+                Full-stack web development
+              </p>
+              <p className="mt-1 text-sm text-[var(--color-text-secondary)]">
+                Frontend, APIs, and data
+              </p>
+            </div>
 
-                    <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#151515]/50">
-                      Full Stack Web Developer
-                    </span>
-                  </div>
-
-                  <h1 className="mt-7 max-w-5xl text-[clamp(4rem,10vw,9.5rem)] font-black leading-[0.78] tracking-[-0.085em]">
-                    ISAACK
-                    <br />
-                    <span className="text-[#1683f7]">GITAU.</span>
-                  </h1>
-
-                  <div className="mt-10 max-w-3xl">
-                    <p className="text-xl font-bold leading-[1.15] tracking-[-0.035em] sm:text-2xl lg:text-3xl">
-                      I build practical software for real problems.
-                    </p>
-
-                    <p className="mt-5 max-w-2xl text-base leading-8 text-[#151515]/75 sm:text-lg">
-                      My work combines frontend development, backend
-                      engineering, relational data, authentication, testing,
-                      and hands-on IT experience.
-                    </p>
-                  </div>
-
-                  <div className="mt-9 flex flex-wrap items-center gap-4 sm:gap-6">
-                    <a
-                      href="#work"
-                      className="group inline-flex min-h-12 items-center justify-center gap-4 border border-[#151515] bg-[#151515] px-6 py-3 text-[10px] font-bold uppercase tracking-[0.16em] text-white shadow-[3px_3px_0_0_#1683f7] transition-all duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-[#1683f7] hover:shadow-[5px_5px_0_0_#151515] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1683f7] focus-visible:ring-offset-4"
-                    >
-                      <span>View selected work</span>
-
-                      <span
-                        aria-hidden="true"
-                        className="text-sm transition-transform duration-200 group-hover:translate-x-1"
-                      >
-                        →
-                      </span>
-                    </a>
-
-                    <a
-                      href="/Isaack-Gitau-CV.docx"
-                      download
-                      className="group inline-flex min-h-12 items-center gap-3 px-1 py-3 text-[10px] font-bold uppercase tracking-[0.16em] transition-colors hover:text-[#1683f7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1683f7] focus-visible:ring-offset-4"
-                    >
-                      Download CV
-
-                      <span
-                        aria-hidden="true"
-                        className="transition-transform duration-200 group-hover:translate-y-0.5"
-                      >
-                        ↓
-                      </span>
-                    </a>
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <div className="absolute -right-3 -top-3 hidden h-20 w-20 border-r border-t border-[#1683f7] sm:block" />
-
-                  <div className="border border-[#151515]/10 bg-[#e9e5dd] p-4 sm:p-5">
-                    <div className="relative aspect-[4/5] overflow-hidden border border-[#151515]/10 bg-[#ded9cf]">
-                      <img
-                        src="/profile-placeholder.png"
-                        alt="Temporary portrait placeholder for Isaack Gitau"
-                        className="h-full w-full object-cover"
-                      />
-
-                      <div className="absolute inset-x-0 bottom-0 bg-[#151515]/90 p-5 text-[#f4f1eb] sm:p-7">
-                        <div className="flex items-center justify-between border-b border-white/15 pb-4">
-                          <span className="text-[9px] font-bold uppercase tracking-[0.16em] text-white/60">
-                            Developer profile
-                          </span>
-
-                          <span className="text-[9px] font-bold text-[#1683f7]">
-                            01
-                          </span>
-                        </div>
-
-                        <p className="mt-5 max-w-[260px] text-2xl font-bold leading-[0.95] tracking-[-0.05em] sm:text-3xl">
-                          Developer,
-                          <br />
-                          builder,
-                          <br />
-                          problem solver.
-                        </p>
-
-                        <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4">
-                          <span className="text-[8px] font-bold uppercase tracking-[0.15em] text-white/45">
-                            React / Python / PostgreSQL
-                          </span>
-
-                          <span className="h-1.5 w-1.5 rounded-full bg-[#1683f7]" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 flex items-center justify-between border-t border-[#151515]/10 pt-4">
-                    <span className="text-[9px] font-bold uppercase tracking-[0.16em] text-[#151515]/40">
-                      Currently building
-                    </span>
-
-                    <span className="text-xs font-bold">
-                      TrackIt
-                      <span className="ml-2 text-[#1683f7]">↗</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-16 grid border-y border-[#151515]/10 sm:grid-cols-3">
-                <div className="border-b border-[#151515]/10 px-5 py-5 sm:border-b-0 sm:border-r">
-                  <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-[#151515]/40">
-                    Focus
-                  </p>
-
-                  <p className="mt-2 text-xs font-bold">
-                    Full-stack development
-                  </p>
-                </div>
-
-                <div className="border-b border-[#151515]/10 px-5 py-5 sm:border-b-0 sm:border-r">
-                  <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-[#151515]/40">
-                    Core stack
-                  </p>
-
-                  <p className="mt-2 text-xs font-bold">
-                    React + FastAPI + PostgreSQL
-                  </p>
-                </div>
-
-                <div className="px-5 py-5">
-                  <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-[#151515]/40">
-                    Direction
-                  </p>
-
-                  <p className="mt-2 text-xs font-bold">
-                    Software + IT systems
-                  </p>
-                </div>
-              </div>
+            <div>
+              <p className="text-xs text-[var(--color-text-secondary)]">
+                Background
+              </p>
+              <p className="mt-2 text-lg font-semibold tracking-[-0.03em]">
+                Information Technology
+              </p>
+              <p className="mt-1 text-sm text-[var(--color-text-secondary)]">
+                Software and technical support
+              </p>
             </div>
           </div>
         </section>
 
+        {/* Selected work */}
         <section
-          id="capabilities"
-          className="border-y border-[#151515]/10"
+          id="work"
+          className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28"
         >
+          <SectionHeading
+            number="01"
+            eyebrow="Selected work"
+            title="One project, built from the problem outward."
+            description="TrackIt is my main project showcase, demonstrating how I approach a software system, from user workflows and interfaces to APIs, data, permissions, and testing."
+          />
+
+          <ProjectShowcase />
+        </section>
+
+        {/* Capabilities */}
+        <section id="capabilities" className="bg-[var(--color-surface-raised)]">
           <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
             <SectionHeading
-              number="01"
+              number="02"
               eyebrow="Capabilities"
-              title="I work across the product, not just the screen."
-              description="My work sits between interface development, backend systems, structured data, and practical technical support."
+              title="Working across the product, not just the screen."
+              description="My learning and project work span interface development, backend systems, structured data, and practical technical support."
             />
 
             <CapabilityGrid />
           </div>
         </section>
 
-        <section
-          id="work"
-          className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28"
-        >
+        {/* Process */}
+        <section className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
           <SectionHeading
-            number="02"
-            eyebrow="Selected work"
-            title="One project, built from the problem outward."
-            description="TrackIt is the main project I use to demonstrate how I approach a complete software system, from user workflows and interfaces to APIs, data, permissions, and testing."
+            number="03"
+            eyebrow="How I build"
+            title="A practical process, from idea to working software."
+            description="I approach projects by understanding the problem, structuring the solution, and improving it through testing and refinement."
           />
 
-          <ProjectShowcase />
-        </section>
-
-        <section className="border-y border-[#151515]/10 bg-[#e9e5dd]">
-          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-            <SectionHeading
-              number="03"
-              eyebrow="How I build"
-              title="A practical process, from idea to working software."
-            />
-
-            <div className="mt-14 grid border-l border-t border-[#151515]/10 sm:grid-cols-2 lg:grid-cols-5">
-              {buildProcess.map((step) => (
-                <article
-                  key={step.number}
-                  className="border-b border-r border-[#151515]/10 bg-[#e9e5dd] p-6 sm:p-8"
-                >
-                  <span className="text-xs font-bold tracking-[0.18em] text-[#1683f7]">
+          <div className="mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-5 lg:gap-x-6">
+            {buildProcess.map((step) => (
+              <article key={step.number} className="min-w-0">
+                <div>
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg)] text-[10px] font-bold tracking-wide text-[var(--color-accent)]">
                     {step.number}
                   </span>
+                </div>
 
-                  <h3 className="mt-12 text-xl font-bold tracking-[-0.035em]">
-                    {step.title}
+                <h3 className="mt-6 text-2xl font-bold tracking-[-0.045em]">
+                  {step.title}
+                  <span className="text-[var(--color-accent)]">.</span>
+                </h3>
+
+                <p className="mt-3 text-sm leading-7 text-[var(--color-text-secondary)]">
+                  {step.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* Technical focus */}
+        <section className="bg-[var(--color-surface-raised)]">
+          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+            <SectionHeading
+              number="04"
+              eyebrow="Technical focus"
+              title="Tools I use to turn ideas into systems."
+              description="My current learning and project stack includes modern JavaScript and Python development, relational databases, Linux, and software development tools."
+            />
+
+            <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+              {technicalFocus.map((group) => (
+                <article key={group.label} className="min-w-0">
+                  <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--color-accent)]">
+                    {group.label}
                   </h3>
 
-                  <p className="mt-4 text-xs leading-6 text-[#151515]/70">
-                    {step.description}
-                  </p>
+                  <ul className="mt-5 space-y-3">
+                    {group.items.map((item) => (
+                      <li
+                        key={item}
+                        className="text-sm font-medium text-[var(--color-text-secondary)]"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-          <SectionHeading
-            number="04"
-            eyebrow="Technical focus"
-            title="Tools I use to turn ideas into systems."
-            description="A practical stack built around modern JavaScript and Python development, relational databases, Linux, and the tooling needed to maintain the work."
-          />
-
-          <div className="mt-14 grid border-l border-t border-[#151515]/10 sm:grid-cols-2 lg:grid-cols-4">
-            {technicalFocus.map((group) => (
-              <article
-                key={group.label}
-                className="border-b border-r border-[#151515]/10 p-6 sm:p-8 lg:p-9"
-              >
-                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#1683f7]">
-                  {group.label}
-                </p>
-
-                <ul className="mt-8 space-y-3">
-                  {group.items.map((item) => (
-                    <li
-                      key={item}
-                      className="border-b border-[#151515]/10 pb-3 text-sm font-semibold"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </section>
-
+        {/* Engineering */}
         <section
           id="engineering"
-          className="border-y border-[#151515]/10 bg-[#151515] text-[#f4f1eb]"
-        >
-          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-            <div className="grid gap-6 border-t border-white/15 pt-5 lg:grid-cols-[0.16fr_minmax(0,1fr)] lg:gap-8">
-              <div className="flex items-start gap-3">
-                <span className="text-xs font-bold tracking-[0.18em] text-[#1683f7]">
-                  05
-                </span>
-
-                <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
-                  Engineering
-                </span>
-              </div>
-
-              <div className="max-w-4xl">
-                <h2 className="text-4xl font-bold leading-[0.95] tracking-[-0.055em] sm:text-5xl lg:text-6xl">
-                  The details behind the interface
-                  <span className="text-[#1683f7]">.</span>
-                </h2>
-
-                <p className="mt-5 max-w-2xl text-sm leading-7 text-white/65 sm:text-base">
-                  I care about what happens underneath the interface too:
-                  application structure, permissions, data integrity,
-                  moderation workflows, matching logic, and tests.
-                </p>
-              </div>
-            </div>
-
-            <EngineeringDetails />
-          </div>
-        </section>
-
-        <section
-          id="about"
           className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28"
         >
           <SectionHeading
-            number="06"
-            eyebrow="Experience"
-            title="Software development grounded in real technical support."
-            description="My background combines software development with hands-on IT work, giving me experience with both the applications people use and the systems supporting them."
+            number="05"
+            eyebrow="Engineering"
+            title="The details behind the interface."
+            description="I pay attention to what happens underneath the interface too: application structure, permissions, data integrity, moderation workflows, matching logic, and tests."
           />
 
-          <ExperienceTimeline />
+          <EngineeringDetails />
+        </section>
 
-          <div className="mt-20 grid gap-12 border-t border-[#151515]/10 pt-14 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#1683f7]">
-                About me
-              </p>
+        {/* About and experience */}
+        <section id="about" className="bg-[var(--color-surface-raised)]">
+          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
+            <SectionHeading
+              number="06"
+              eyebrow="Experience"
+              title="Software development grounded in IT."
+              description="My background combines software development with hands-on IT experience, connecting the applications people use with the technology that supports them."
+            />
 
-              <h3 className="mt-5 text-3xl font-bold leading-none tracking-[-0.05em] sm:text-4xl">
-                Building my way from IT into deeper software engineering.
-              </h3>
-            </div>
+            <ExperienceTimeline />
 
-            <div className="max-w-2xl space-y-6 text-sm leading-7 text-[#151515]/75 sm:text-base">
-              <p>
-                I am an Information Technology specialist and full-stack
-                developer interested in building software that solves practical
-                problems rather than existing only as a technical exercise.
-              </p>
+            <div className="mt-20 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--color-accent)]">
+                  A little more about me
+                </p>
 
-              <p>
-                My development work has led me toward React, TypeScript,
-                Python, FastAPI, PostgreSQL, and modern application
-                architecture, while my IT experience keeps me focused on
-                reliability, troubleshooting, and the people using the
-                technology.
-              </p>
+                <h3 className="mt-5 max-w-lg text-3xl font-bold leading-tight tracking-[-0.055em] sm:text-4xl">
+                  Building my way from IT into deeper software engineering.
+                </h3>
+              </div>
 
-              <p>
-                TrackIt represents that direction: a project where interface
-                design, backend engineering, data modeling, authentication,
-                moderation, and testing all have to work together.
-              </p>
+              <div className="max-w-2xl space-y-5 text-sm leading-7 text-[var(--color-text-secondary)] sm:text-base">
+                <p>
+                  I am an Information Technology graduate awaiting graduation
+                  and a developer interested in creating software that solves
+                  practical problems rather than existing only as a technical
+                  exercise.
+                </p>
+
+                <p>
+                  My development work has led me toward React, TypeScript,
+                  Python, FastAPI, PostgreSQL, and modern application
+                  architecture. My IT background also keeps me focused on
+                  reliability, troubleshooting, and the people using the
+                  technology.
+                </p>
+
+                <p>
+                  TrackIt represents that direction: a project where interface
+                  design, backend engineering, data modeling, authentication,
+                  moderation, and testing need to work together.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        <section id="contact" className="border-t border-[#151515]/10">
-          <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
-            <SectionHeading
-              number="07"
-              eyebrow="Contact"
-              title="Let's build something useful."
-              description="For software projects, development opportunities, technical work, or a conversation about what I am building next."
-            />
+        {/* Contact */}
+        <section
+          id="contact"
+          className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 lg:px-12 lg:py-28"
+        >
+          <SectionHeading
+            number="07"
+            eyebrow="Contact"
+            title="Let's build something useful."
+            description="For software projects, development opportunities, technical work, or a conversation about what I am building next."
+          />
 
-            <ContactPanel />
-          </div>
+          <ContactPanel />
         </section>
       </main>
 
-      <footer className="border-t border-[#151515]/10">
-        <div className="mx-auto flex max-w-[1440px] flex-col gap-5 px-5 py-8 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12">
-          <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#151515]/40">
+      {/* Footer */}
+      <footer className="bg-[var(--color-surface-raised)]">
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-6 px-5 py-8 sm:px-8 md:flex-row md:items-center md:justify-between lg:px-12">
+          <p className="text-xs text-[var(--color-text-secondary)]">
             © 2026 Isaack Gitau
           </p>
 
-          <div className="flex flex-wrap gap-5">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
             <a
               href="https://github.com/Isaack-Gitau"
               target="_blank"
               rel="noreferrer"
-              className="rounded-sm text-[10px] font-bold uppercase tracking-[0.14em] text-[#151515]/50 transition-colors hover:text-[#1683f7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1683f7] focus-visible:ring-offset-4"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-accent)]"
             >
-              GitHub ↗
+              <BrandIcon icon={siGithub} size={15} />
+              GitHub
             </a>
 
             <a
               href="mailto:isaackgofficial@gmail.com"
-              className="rounded-sm text-[10px] font-bold uppercase tracking-[0.14em] text-[#151515]/50 transition-colors hover:text-[#1683f7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1683f7] focus-visible:ring-offset-4"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-accent)]"
             >
-              Email ↗
+              <Mail size={15} aria-hidden="true" />
+              Email
             </a>
 
             <a
-              href="/Isaack-Gitau-CV.docx"
+              href="/Isaack-Gitau-CV.pdf"
               download
-              className="rounded-sm text-[10px] font-bold uppercase tracking-[0.14em] text-[#151515]/50 transition-colors hover:text-[#1683f7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1683f7] focus-visible:ring-offset-4"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-accent)]"
             >
-              CV ↓
+              <Download size={15} aria-hidden="true" />
+              Download CV
             </a>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

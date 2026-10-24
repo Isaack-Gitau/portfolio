@@ -1,3 +1,4 @@
+
 const experience = [
   {
     period: 'APR - JUL 2026',
@@ -17,54 +18,54 @@ const experience = [
 
 function ExperienceTimeline() {
   return (
-    <div className="mt-14">
+    <div className="mt-16">
       {experience.map((item) => (
         <article
           key={`${item.role}-${item.organization}`}
-          className="border-y border-[#151515]/10"
+          className="grid gap-8 lg:grid-cols-[0.28fr_minmax(0,1fr)] lg:gap-12"
         >
-          <div className="grid lg:grid-cols-[0.28fr_minmax(0,1fr)]">
-            <div className="border-b border-[#151515]/10 p-6 lg:border-b-0 lg:border-r lg:p-8">
-              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#1683f7]">
-                {item.period}
+          <aside className="lg:pt-2">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+              {item.period}
+            </p>
+
+            <p className="mt-3 text-sm text-[var(--color-text-secondary)]">
+              {item.location}
+            </p>
+          </aside>
+
+          <div className="min-w-0">
+            <h3 className="text-3xl font-bold leading-tight tracking-[-0.05em] text-[var(--color-text)] sm:text-4xl">
+              {item.role}
+              <span className="text-[var(--color-accent)]">.</span>
+            </h3>
+
+            <p className="mt-3 text-sm font-semibold text-[var(--color-text-secondary)] sm:text-base">
+              {item.organization}
+            </p>
+
+            <p className="mt-6 max-w-3xl text-sm leading-7 text-[var(--color-text-secondary)] sm:text-base sm:leading-8">
+              {item.description}
+            </p>
+
+            <div className="mt-10">
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-accent)]">
+                Responsibilities
               </p>
 
-              <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-[#151515]/50">
-                {item.location}
-              </p>
-            </div>
-
-            <div className="p-6 sm:p-8 lg:p-10">
-              <div className="max-w-3xl">
-                <h3 className="text-2xl font-bold tracking-[-0.04em] sm:text-3xl">
-                  {item.role}
-                </h3>
-
-                <p className="mt-2 text-sm font-semibold text-[#151515]/65">
-                  {item.organization}
-                </p>
-
-                <p className="mt-6 text-sm leading-7 text-[#151515]/75 sm:text-base">
-                  {item.description}
-                </p>
-              </div>
-
-              <div className="mt-8 grid gap-px border border-[#151515]/10 bg-[#151515]/10 sm:grid-cols-2">
+              <ul className="mt-5 grid gap-x-10 gap-y-7 sm:grid-cols-2">
                 {item.responsibilities.map((responsibility, index) => (
-                  <div
-                    key={responsibility}
-                    className="bg-[#f4f1eb] p-5 sm:p-6"
-                  >
-                    <span className="text-[9px] font-bold tracking-[0.16em] text-[#1683f7]">
-                      0{index + 1}
+                  <li key={responsibility} className="min-w-0">
+                    <span className="text-xs font-bold tabular-nums text-[var(--color-accent)]">
+                      {String(index + 1).padStart(2, '0')}
                     </span>
 
-                    <p className="mt-4 text-xs font-medium leading-6 text-[#151515]/70">
+                    <p className="mt-3 text-sm leading-7 text-[var(--color-text-secondary)]">
                       {responsibility}
                     </p>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </div>
         </article>

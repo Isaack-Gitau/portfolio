@@ -31,35 +31,29 @@ const capabilities = [
 
 function CapabilityGrid() {
   return (
-    <div className="mt-14 grid border-l border-t border-[#151515]/10 sm:grid-cols-2">
+    <div className="mt-16 grid gap-x-16 gap-y-16 sm:grid-cols-2 sm:gap-y-20 lg:mt-20 lg:gap-x-20">
       {capabilities.map((capability) => (
-        <article
-          key={capability.number}
-          className="border-b border-r border-[#151515]/10 p-6 sm:p-8 lg:p-10"
-        >
-          <div className="flex items-start justify-between gap-6">
-            <span className="text-xs font-bold tracking-[0.18em] text-[#1683f7]">
+        <article key={capability.number} className="min-w-0">
+          <div>
+            <span className="text-xs font-bold tracking-[0.18em] text-[var(--color-accent)]">
               {capability.number}
-            </span>
-
-            <span className="text-[9px] font-bold uppercase tracking-[0.16em] text-[#151515]/35">
-              Capability
             </span>
           </div>
 
-          <h3 className="mt-12 text-2xl font-bold tracking-[-0.04em] sm:text-3xl">
+          <h3 className="mt-7 max-w-md text-3xl font-bold leading-[1.02] tracking-[-0.045em] text-[var(--color-text)] sm:text-4xl">
             {capability.title}
+            <span className="text-[var(--color-accent)]">.</span>
           </h3>
 
-          <p className="mt-4 max-w-xl text-sm leading-7 text-[#151515]/70">
+          <p className="mt-5 max-w-xl text-sm leading-7 text-[var(--color-text-secondary)] sm:text-base sm:leading-8">
             {capability.description}
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 border-t border-[#151515]/10 pt-5">
+          <div className="mt-7 flex flex-wrap gap-x-5 gap-y-3">
             {capability.technologies.map((technology) => (
               <span
                 key={technology}
-                className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#151515]/55"
+                className="text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-text-secondary)]"
               >
                 {technology}
               </span>
